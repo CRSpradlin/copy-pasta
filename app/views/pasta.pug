@@ -1,17 +1,22 @@
-<!-- Include stylesheet -->
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+extends ../node_modules/jade-bootstrap/_bootstrap
 
-<!-- Create the editor container -->
-<div id="editor">
-  <p>Hello World!</p>
-  <p>Some initial <strong>bold</strong> text</p>
-  <p><br></p>
-</div>
+block prepend styles
+    link(href="https://cdn.quilljs.com/1.3.6/quill.snow.css", rel="stylesheet")
+    link(href="/css/styles.css" rel="stylesheet")
 
-<!-- Include the Quill library -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<script src="/js/script.js"></script>
+block body
+    div.mainCol
+        div(id="editor")
+            p Hello World!
+            p Some initial <b>bold</b> text
+            p
+                br
+        button(id="b_save") Save
+        button(id="b_cancel") Cancel
 
-<script>renderQuill()</script>
-<!-- Initialize Quill editor -->
-// <script> var quill = new Quill('#editor', { theme: 'snow' }); </script>
+block append scripts
+    script(src="https://cdn.quilljs.com/1.3.6/quill.js")
+    script(src="/js/script.js")
+    script.
+        var delta = !{delta}
+        renderQuill()
