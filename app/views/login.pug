@@ -1,0 +1,19 @@
+extends ../node_modules/jade-bootstrap/_bootstrap
+
+block prepend styles
+    link(href="/css/styles.css" rel="stylesheet")
+
+block body
+    div.mainCol(id="mainCol")
+        h1 Log In
+        br
+        form(action="/login", method="post")
+            +input("text","username","","Username",id="username")
+            +input("password","password","","Password",id="password")
+            +submit("Log In")
+        if error
+            br
+            +alert-x-danger(error.message)
+
+block append scripts
+    script(src="/js/script.js")

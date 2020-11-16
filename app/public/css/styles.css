@@ -5,3 +5,7 @@
 #b_save {
     margin: 10px;
 }
+
+.loginWarning {
+    display: none;
+}
