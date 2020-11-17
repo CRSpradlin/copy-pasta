@@ -1,10 +1,9 @@
-const passport = require('passport')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const keys = require('../keys')
 const UserModel = require('../models/user')
 
-let routes = (app) => {
+let routes = (app, passport) => {
     app.get('/register', async (req, res) => {
         res.render('register');
     })
@@ -19,7 +18,7 @@ let routes = (app) => {
             try {
               //const salt = await bcrypt.genSalt(hashCost);
               const passwordHash = await bcrypt.hash(password, hashCost)
-              const userDocument = new UserModel({ username, passwordHash })
+              const userDocument = new UserModel.user({ username, passwordHash })
               await userDocument.save()
               
               res.redirect('/login')
@@ -45,7 +44,7 @@ let routes = (app) => {
             /** This is what ends up in our JWT */
                 const payload = {
                     username: user.username,
-                    expires: Date.now() + parseInt(process.env.JWT_EXPIRATION_MS),
+                    expires: Date.now() + parseInt(27000000),
                 }
         
                 /** assigns payload to req.user */
@@ -54,12 +53,12 @@ let routes = (app) => {
                         res.render('login', {err:{message:error}})
                     } else {
                     /** generate a signed json web token and return it in the response */
-                    const token = jwt.sign(JSON.stringify(payload), keys.secret)
+                    const token = jwt.sign(payload, keys.secret)
             
                     /** assign our jwt to the cookie */
-                    res.cookie('jwt', jwt, { httpOnly: true, secure: true })
+                    res.cookie('jwt', token, { httpOnly: false })
 
-                    res.render("pasta")
+                    res.redirect(302, "/")
                     }
                 })
     
