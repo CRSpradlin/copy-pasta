@@ -1,52 +1,48 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const passportJWT = require('passport-jwt');
-const ExtractJWT = require('passport-jwt').ExtractJwt;
-const JWTStrategy = passportJWT.Strategy;
-const JWTCookieComboStrategy = require('passport-jwt-cookiecombo');
-const bcrypt = require('bcrypt');
+const LocalStrategy = require('passport-local').Strategy
+const passportJWT = require('passport-jwt')
+const JWTStrategy = passportJWT.Strategy
+const bcrypt = require('bcrypt')
 
-const { secret } = require('./keys');
+const { secret } = require('./keys')
 
-const UserModel = require('./models/user');
+const UserModel = require('./models/user')
 
-let passportSetup = (passport) => {
+const passportSetup = (passport) => {
   passport.use(new LocalStrategy({
     usernameField: 'username',
-    passwordField: 'password',
-  },async (username, password, done) => {
+    passwordField: 'password'
+  }, async (username, password, done) => {
     try {
-      console.log('local strat username ' + username)
-      const userDocument = await UserModel.user.findOne({username: username}).exec();
-      const passwordsMatch = await bcrypt.compare(password, userDocument.passwordHash);
+      const userDocument = await UserModel.User.findOne({ username: username }).exec()
+      const passwordsMatch = await bcrypt.compare(password, userDocument.passwordHash)
 
       if (passwordsMatch) {
-        return done(null, userDocument);
+        return done(null, userDocument)
       } else {
-        return done('Incorrect Username / Password');
+        return done('Incorrect Username / Password')
       }
     } catch (error) {
-      done(error);
+      done(error)
     }
-  }));
+  }))
 
   const opts = {}
-  let cookieExtractor = function(req) {
-    var token = null;
-    if (req && req.cookies) token = req.cookies['jwt'];
-    return token;
-  };
+  const cookieExtractor = function (req) {
+    let token = null
+    if (req && req.cookies) token = req.cookies.jwt
+    return token
+  }
   opts.secretOrKey = secret
   opts.jwtFromRequest = cookieExtractor
 
-  passport.use(new JWTStrategy(opts, function(jwtPayload, done){
-      if (Date.now() > jwtPayload.expires) {
-        return done('jwt expired')
-      }
-
-      return done(null, jwtPayload)
+  passport.use(new JWTStrategy(opts, function (jwtPayload, done) {
+    if (Date.now() > jwtPayload.expires) {
+      return done('jwt expired')
     }
-  ));
+
+    return done(null, jwtPayload)
+  }
+  ))
 }
 
-module.exports = passportSetup;
+module.exports = passportSetup

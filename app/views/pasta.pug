@@ -1,25 +1,18 @@
-extends ../node_modules/jade-bootstrap/_bootstrap
+extends base.pug
 
 block prepend styles
     link(href="https://cdn.quilljs.com/1.3.6/quill.snow.css", rel="stylesheet")
-    link(href="/css/styles.css" rel="stylesheet")
+    link(href="/css/highlight.css" rel="stylesheet")
 
-block body
-    +navbar("CopyPasta","dropdown_menu")
-        +nav_item("/","active") Home
-        +nav_item("/pasta") Pastas
-    div.mainCol
-        h3#pasta-name Default Pasta Name
-        input.form-control.h3.hidden#name-input(placeholder="Default Pasta Name")
-        div(id="editor")
-            p Hello World!
-            p Some initial <b>bold</b> text
-            p
-                br
-        button.btn.btn-primary#b_save(type="button") Save
-        button.btn.btn-danger#b_cancel(type="button") Cancel
+block content
+    h3#pasta-name Click HERE to name your pasta!
+    input.form-control.h3.hidden#name-input(placeholder="Default Pasta Name")
+    div(id="editor")
+    button.btn.btn-primary#b_save(type="button") Save
+    button.btn.btn-danger#b_cancel(type="button") Cancel
 
 block append scripts
+    script(src="/js/highlight.js")
     script(src="https://cdn.quilljs.com/1.3.6/quill.js")
     script(src="/js/script.js")
     script
@@ -29,14 +22,11 @@ block append scripts
         if(id)
             .
                 id="!{id}"; 
-                 
-        if(delta)
-            .
-                delta=!{delta}; 
+
                  
         if(pasta)
             .
                 pasta=!{pasta}; 
 
         .
-            renderQuill()
+            renderQuill(true)

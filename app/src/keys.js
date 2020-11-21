@@ -1,2 +1,2 @@
 const secret = '?copy-pasta?'
-module.exports.secret = secret;
+module.exports.secret = secret

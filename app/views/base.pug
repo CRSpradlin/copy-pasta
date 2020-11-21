@@ -1,0 +1,19 @@
+extends ../node_modules/jade-bootstrap/_bootstrap
+block prepend styles
+    link(href="/css/styles.css" rel="stylesheet")
+
+block body
+    +navbar("CopyPasta","dropdown_menu")
+        li
+            a(href="/") Home
+        li
+            a(href="/pasta") Pastas
+        if user
+            +nav_item_dropdown("#")(label=user.username)
+                li
+                    a(href="/logout") Logout   
+        else
+            li
+                a(href="/login") Login
+    div.mainCol(id="mailCol")
+        block content

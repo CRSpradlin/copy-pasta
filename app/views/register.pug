@@ -1,20 +1,13 @@
-extends ../node_modules/jade-bootstrap/_bootstrap
+extends base.pug
 
-block prepend styles
-    link(href="/css/styles.css" rel="stylesheet")
-
-block body
-    div.mainCol(id="mainCol")
-        h1 Register
+block content
+    h1 Register
+    br
+    form(action="/register", method="post")
+        +input("text","username","","Username",id="username")
+        +input("password","password","","Password", id="password")
+        +input("password","password_again","","Password Again", id="password_again")
+        +submit("Register")
+    if error
         br
-        form(action="/register", method="post")
-            +input("text","username","","Username",id="username")
-            +input("password","password","","Password", id="password")
-            +input("password","password_again","","Password Again", id="password_again")
-            +submit("Register")
-        if error
-            br
-            +alert-x-danger(error.message)
-
-block append scripts
-    script(src="/js/script.js")
+        +alert-x-danger(error.message)

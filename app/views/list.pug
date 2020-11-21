@@ -1,0 +1,20 @@
+extends base.pug
+
+block content
+    +list-group-custom()
+        if !pastaList.length
+            +list-group-item("/")
+                h2.list-group-item-heading No Pastas Found
+                p.list-group-item-text
+                    | Click HERE to boil some up right now!
+        else
+            each val in pastaList
+                - var url = "/pasta/"+val._id
+                a.list-group-item(href=url)
+                    h2.list-group-item-heading !{val.name}
+                    p.list-group-item-text
+                        - var dateCreated = val.createdAt.toLocaleString('en-US')
+                        - var dateUpdated = val.lastUpdated.toLocaleString('en-US')
+                        | Created On: !{dateCreated}
+                        br
+                        | Last Updated: !{dateUpdated}
