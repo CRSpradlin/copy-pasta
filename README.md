@@ -1,2 +1,3 @@
-# DistWebFinal
-Distributed Web Systems Final Project
+# CopyPasta
+"When in doubt, Copy Pasta"
+ - Gabriel Petkewich
