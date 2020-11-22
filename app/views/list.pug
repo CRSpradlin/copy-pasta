@@ -3,7 +3,7 @@ extends base.pug
 block content
     +list-group-custom()
         if !pastaList.length
-            +list-group-item("/")
+            a.list-group-item(href="/")
                 h2.list-group-item-heading No Pastas Found
                 p.list-group-item-text
                     | Click HERE to boil some up right now!

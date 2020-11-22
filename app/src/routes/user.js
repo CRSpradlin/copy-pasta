@@ -13,17 +13,19 @@ const routes = (app, passport) => {
     if (passwordAgain !== password) {
       res.render('register', { error: { message: 'Passwords do not match' } })
     } else {
-      const hashCost = 10
+      if (await UserModel.methods.userExists(username)) {
+        res.render('register', { error: { message: 'That username is already taken, please try a different one.' } })
+      } else {
+        const hashCost = 10
+        try {
+          const passwordHash = await bcrypt.hash(password, hashCost)
+          const userDocument = new UserModel.User({ username, passwordHash })
+          await userDocument.save()
 
-      try {
-        // const salt = await bcrypt.genSalt(hashCost);
-        const passwordHash = await bcrypt.hash(password, hashCost)
-        const userDocument = new UserModel.User({ username, passwordHash })
-        await userDocument.save()
-
-        res.redirect('/login')
-      } catch (error) {
-        res.render('register', { error: { message: error } })
+          res.redirect('/login')
+        } catch (error) {
+          res.render('register', { error: { message: error } })
+        }
       }
     }
   })
@@ -39,23 +41,17 @@ const routes = (app, passport) => {
         if (error || !user) {
           res.render('login', { error: { message: error } })
         } else {
-          /** This is what ends up in our JWT */
           const payload = {
             username: user.username,
             expires: Date.now() + parseInt(27000000)
           }
 
-          /** assigns payload to req.user */
           req.login(payload, { session: false }, (error) => {
             if (error) {
               res.render('login', { err: { message: error } })
             } else {
-              /** generate a signed json web token and return it in the response */
               const token = jwt.sign(payload, keys.secret)
-
-              /** assign our jwt to the cookie */
               res.cookie('jwt', token, { httpOnly: false })
-
               res.redirect(302, '/')
             }
           })

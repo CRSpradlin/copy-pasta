@@ -1,15 +1,13 @@
 let quill
 
-const renderQuill = (editor) => {
+const renderQuill = () => {
   let toolbar = false
-  let readOnly = true
-  if (editor) {
+  if (!readOnly) {
     toolbar = [
       [{ header: [1, 2, false] }],
       ['bold', 'italic', 'underline'],
-      ['image', 'code-block']
+      ['code-block']
     ]
-    readOnly = false
   }
   quill = new Quill('#editor', {
     modules: {
@@ -35,7 +33,6 @@ const saveFile = async () => {
   }
   if (id) {
     object.id = id
-    console.log(id)
   }
   try {
     const response = await fetch('/save', {
@@ -55,7 +52,7 @@ const saveFile = async () => {
 }
 
 const cancelFile = async () => {
-  window.location.href = '/'
+  window.location.reload()
 }
 
 const pasta_name = document.getElementById('pasta-name')
@@ -78,7 +75,7 @@ if (document.getElementById('b_save')) {
   document.getElementById('b_cancel').addEventListener('click', cancelFile)
 }
 
-if (pasta_name && editor) {
+if (pasta_name && !readOnly) {
   pasta_name.addEventListener('click', enableNameEditing)
   name_input.addEventListener('blur', disableNameEditing)
   name_input.value = pasta_name.innerText

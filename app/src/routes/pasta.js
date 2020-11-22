@@ -3,6 +3,22 @@ const UserModel = require('../models/user')
 const PastaModel = require('../models/pasta')
 
 const router = (app, passport) => {
+  app.get('/about',
+    passport.authenticate('jwt', { session: false, failWithError: true }),
+    async (req, res, next) => {
+      const { user } = req
+      res.render('about', { user: user })
+    },
+    async (err, req, res, next) => {
+      if (err) {
+        res.status(200)
+        res.render('about')
+      } else {
+        res.status(500).send()
+      }
+    }
+  )
+
   app.get('/',
     passport.authenticate('jwt', { session: false, failWithError: true }),
     async (req, res, next) => {
@@ -10,9 +26,12 @@ const router = (app, passport) => {
       res.render('pasta', { user: user })
     },
     async (err, req, res, next) => {
-      console.log(err)
-      res.status(200)
-      res.render('pasta')
+      if (err) {
+        res.status(200)
+        res.render('pasta')
+      } else {
+        res.status(500).send()
+      }
     }
   )
 
@@ -30,12 +49,15 @@ const router = (app, passport) => {
       }
     },
     async (err, req, res, next) => {
-      console.log(err)
-      res.status(200)
-      const { user } = req
-      const pasta = req.params.pastaID
-      const p = await PastaModel.Pasta.findById(pasta).lean()
-      res.render('view', { pasta: JSON.stringify(p), id: pasta, user: user })
+      if (err) {
+        res.status(200)
+        const { user } = req
+        const pasta = req.params.pastaID
+        const p = await PastaModel.Pasta.findById(pasta).lean()
+        res.render('view', { pasta: JSON.stringify(p), id: pasta, user: user })
+      } else {
+        res.status(500).send()
+      }
     }
   )
 
@@ -47,9 +69,12 @@ const router = (app, passport) => {
       res.render('list', { pastaList: pastas, user: user })
     },
     async (err, req, res, next) => {
-      console.log(err)
-      res.status(200)
-      res.redirect('/login')
+      if (err) {
+        res.status(200)
+        res.redirect('/login')
+      } else {
+        res.status(500).send()
+      }
     }
   )
 
@@ -57,13 +82,12 @@ const router = (app, passport) => {
     passport.authenticate('jwt', { session: false, failWithError: true }),
     async (req, res, next) => {
       const { user } = req
-      console.log(user.username)
       let p, _id
       const delta = req.body.delta
       const name = req.body.name
-      console.log(req.body)
+
       const isOwner = await UserModel.methods.ownsPasta(user.username, req.body.id)
-      console.log('isOwnser: ' + isOwner)
+
       if (isOwner) {
         _id = req.body.id
 
@@ -87,7 +111,7 @@ const router = (app, passport) => {
         await p.save()
         const fullUser = await UserModel.User.findOne({ username: user.username }).exec()
         fullUser.pastas.push(`${_id}`)
-        console.log(fullUser.pastas)
+
         await UserModel.User.findOneAndUpdate({ username: user.username },
           {
             pastas: fullUser.pastas
@@ -99,19 +123,22 @@ const router = (app, passport) => {
       res.send({ id: _id })
     },
     async (err, req, res, next) => {
-      console.log(err)
-      const delta = req.body.delta
-      const name = req.body.name
-      const _id = mongoose.Types.ObjectId()
-      const p = new PastaModel.Pasta({
-        _id: _id,
-        delta: delta,
-        name: name,
-        createdAt: new Date(Date.now()),
-        lastUpdated: new Date(Date.now())
-      })
-      await p.save()
-      res.send({ id: _id })
+      if (err) {
+        const delta = req.body.delta
+        const name = req.body.name
+        const _id = mongoose.Types.ObjectId()
+        const p = new PastaModel.Pasta({
+          _id: _id,
+          delta: delta,
+          name: name,
+          createdAt: new Date(Date.now()),
+          lastUpdated: new Date(Date.now())
+        })
+        await p.save()
+        res.send({ id: _id })
+      } else {
+        res.status(500).send()
+      }
     }
   )
 }

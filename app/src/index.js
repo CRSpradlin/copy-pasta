@@ -1,3 +1,5 @@
+// TODO: Handle error messages for login/register (existing user, password mismatch)
+
 const express = require('express')
 const passport = require('passport')
 const bodyParser = require('body-parser')
@@ -30,5 +32,5 @@ require('./routes/user')(app, passport)
 require('./routes/pasta')(app, passport)
 
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`)
+  console.log('Listening on port 80 (3000 ported through 80 within docker)')
 })

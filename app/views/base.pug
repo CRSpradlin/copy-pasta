@@ -3,7 +3,9 @@ block prepend styles
     link(href="/css/styles.css" rel="stylesheet")
 
 block body
-    +navbar("CopyPasta","dropdown_menu")
+    +navbar("","dropdown_menu")
+        li
+            a(href="/about") CopyPasta
         li
             a(href="/") Home
         li

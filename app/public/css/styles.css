@@ -9,3 +9,7 @@
 .loginWarning {
     display: none;
 }
+
+#editor{
+    border: 0px !important;
+}

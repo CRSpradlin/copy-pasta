@@ -30,4 +30,10 @@ const getPastas = async (username) => {
 }
 methods.getPastas = getPastas
 
+const userExists = async (username) => {
+  const count = await User.countDocuments({ username: username })
+  return count !== 0
+}
+methods.userExists = userExists
+
 module.exports = { User: User, methods: methods }

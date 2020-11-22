@@ -5,13 +5,16 @@ block prepend styles
     link(href="/css/highlight.css" rel="stylesheet")
 
 block content
-    h3#pasta-name Loading...
+    h1#pasta-name Loading...
     input.form-control.h3.hidden#name-input(placeholder="Default Pasta Name")
+    hr
     div(id="editor")
 
 block append scripts
     script(src="/js/highlight.js")
     script(src="https://cdn.quilljs.com/1.3.6/quill.js")
+    script.
+        var readOnly = true;
     script(src="/js/script.js")
     script
         .
@@ -26,4 +29,4 @@ block append scripts
                 pasta=!{pasta}; 
 
         .
-            renderQuill(false)
+            renderQuill()
