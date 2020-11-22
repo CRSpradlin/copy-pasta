@@ -4,6 +4,7 @@
   "description": "We copy the recipe, then we eat the pasta.",
   "main": "src/index.js",
   "scripts": {
+    "docker": "npm install && npm run dev",
     "start": "node src/index.js",
     "dev": "nodemon -e js,pug,css src/index.js",
     "lint": "eslint . --fix",

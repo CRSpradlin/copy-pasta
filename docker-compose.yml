@@ -15,8 +15,11 @@ services:
     ports:
       - 8080:8081
   node:
-    build: .
+    image: node:12
     volumes:
       - ./app:/home/node/app
     ports:
       - 80:3000
+    command: "npm run docker"
+    working_dir: /home/node/app
+    user: "node"
