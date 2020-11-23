@@ -39,7 +39,7 @@ const routes = (app, passport) => {
       { session: false },
       (error, user) => {
         if (error || !user) {
-          res.render('login', { error: { message: error } })
+          res.render('login', { error: { message: 'Could not find that username and password combination, please try again.' } })
         } else {
           const payload = {
             username: user.username,

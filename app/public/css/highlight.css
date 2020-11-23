@@ -1,88 +1,111 @@
-/**
- * Obsidian style
- * ported by Alexander Marenin (http://github.com/ioncreature)
- */
 
 .hljs {
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #282b2e;
+  background: #1E1E1E;
+  color: #DCDCDC;
 }
 
 .hljs-keyword,
-.hljs-selector-tag,
 .hljs-literal,
-.hljs-selector-id {
-  color: #93c763;
+.hljs-symbol,
+.hljs-name {
+  color: #569CD6;
 }
-
-.hljs-number {
-  color: #ffcd22;
-}
-
-.hljs {
-  color: #e0e2e4;
-}
-
-.hljs-attribute {
-  color: #668bb0;
-}
-
-.hljs-code,
-.hljs-class .hljs-title,
-.hljs-section {
-  color: white;
-}
-
-.hljs-regexp,
 .hljs-link {
-  color: #d39745;
+  color: #569CD6;
+  text-decoration: underline;
 }
 
-.hljs-meta {
-  color: #557182;
-}
-
-.hljs-tag,
-.hljs-name,
-.hljs-bullet,
-.hljs-subst,
-.hljs-emphasis,
-.hljs-type,
 .hljs-built_in,
-.hljs-selector-attr,
-.hljs-selector-pseudo,
-.hljs-addition,
-.hljs-variable,
-.hljs-template-tag,
-.hljs-template-variable {
-  color: #8cbbad;
+.hljs-type {
+  color: #4EC9B0;
+}
+
+.hljs-number,
+.hljs-class {
+  color: #B8D7A3;
 }
 
 .hljs-string,
-.hljs-symbol {
-  color: #ec7600;
+.hljs-meta-string {
+  color: #D69D85;
+}
+
+.hljs-regexp,
+.hljs-template-tag {
+  color: #9A5334;
+}
+
+.hljs-subst,
+.hljs-function,
+.hljs-title,
+.hljs-params,
+.hljs-formula {
+  color: #DCDCDC;
 }
 
 .hljs-comment,
-.hljs-quote,
-.hljs-deletion {
-  color: #818e96;
+.hljs-quote {
+  color: #57A64A;
+  font-style: italic;
 }
 
-.hljs-selector-class {
-  color: #A082BD
+.hljs-doctag {
+  color: #608B4E;
 }
 
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-literal,
-.hljs-doctag,
-.hljs-title,
-.hljs-section,
-.hljs-type,
-.hljs-name,
+.hljs-meta,
+.hljs-meta-keyword,
+.hljs-tag {
+  color: #9B9B9B;
+}
+
+.hljs-variable,
+.hljs-template-variable {
+  color: #BD63C5;
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-builtin-name {
+  color: #9CDCFE;
+}
+
+.hljs-section {
+  color: gold;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
 .hljs-strong {
   font-weight: bold;
+}
+
+/*.hljs-code {
+  font-family:'Monospace';
+}*/
+
+.hljs-bullet,
+.hljs-selector-tag,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #D7BA7D;
+}
+
+.hljs-addition {
+  background-color: #144212;
+  display: inline-block;
+  width: 100%;
+}
+
+.hljs-deletion {
+  background-color: #600;
+  display: inline-block;
+  width: 100%;
 }

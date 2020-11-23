@@ -1,14 +1,21 @@
 extends base.pug
 
 block content
-    h1 Log In
+    h1 Register
+    h4 Create an account, then sign-in to save and edit all pastas you make!
+    a.btn.btn-default(href="/register") Register
+    hr
+    h2 Or Log In Below:
     br
     form(action="/login", method="post")
         +input("text","username","","Username",id="username")
         +input("password","password","","Password",id="password")
         span(width="100%")
                 +submit("Log In")
-                a.btn.btn-default(href="/register" style="float:right") Register
     if error
         br
         +alert-x-danger(error.message)
+
+block append scripts
+    script.
+        document.getElementById('nav_login').classList.add('active')

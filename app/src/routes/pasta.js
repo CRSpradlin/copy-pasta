@@ -78,6 +78,39 @@ const router = (app, passport) => {
     }
   )
 
+  app.get('/delete/:pastaID',
+    passport.authenticate('jwt', { session: false }),
+    async (req, res, next) => {
+      const { user } = req
+      const id = req.params.pastaID
+      const pasta = await PastaModel.Pasta.findOne({ _id: id })
+      if (pasta) {
+        const isOwner = await UserModel.methods.ownsPasta(user.username, id)
+        if (isOwner) {
+          const response = await PastaModel.Pasta.deleteOne({ _id: id })
+          if (response.deletedCount === 1) {
+            const fullUser = await UserModel.User.findOne({ username: user.username })
+            const pastaArray = fullUser.pastas
+            const index = pastaArray.indexOf(id)
+            if (index !== -1) {
+              pastaArray.splice(index, 1)
+            }
+            fullUser.pastas = pastaArray
+            await fullUser.save()
+            res.status(200)
+            res.render('delete', { pastaName: pasta.name })
+          } else {
+            res.redirect('/pasta')
+          }
+        } else {
+          res.redirect('/pasta')
+        }
+      } else {
+        res.redirect('/pasta')
+      }
+    }
+  )
+
   app.post('/save',
     passport.authenticate('jwt', { session: false, failWithError: true }),
     async (req, res, next) => {

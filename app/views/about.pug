@@ -2,3 +2,7 @@ extend base.pug
 
 block content
     h1 History of CopyPasta
+
+block append scripts
+    script.
+        document.getElementById('nav_about').classList.add('active')
