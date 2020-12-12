@@ -1,5 +1,3 @@
-// TODO: Handle error messages for login/register (existing user, password mismatch)
-
 const express = require('express')
 const passport = require('passport')
 const bodyParser = require('body-parser')
