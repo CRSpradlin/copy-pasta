@@ -16,6 +16,8 @@ services:
       - 8080:8081
   node:
     image: node:12
+    environment:
+      MONGODB_URI: mongodb://root:example@mongo:27017/copypasta?authSource=admin
     volumes:
       - ./app:/home/node/app
     ports:

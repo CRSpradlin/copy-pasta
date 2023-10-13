@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const app = express()
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://root:example@mongo:27017/copypasta?authSource=admin', {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false
